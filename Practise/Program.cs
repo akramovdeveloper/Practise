@@ -1,6 +1,4 @@
-﻿using Practise.DataStructuresAndAlgorithmtes;
-using Practise.LeetCode.Easy;
-using Practise.PostgresOracle;
+﻿using Practise.CombineTwoExcelFiles;
 
 namespace Practise;
 
@@ -8,7 +6,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine(Solution.MergeAlternately("ab", "pqrs"));
+        CombineTwoExcelSolution.Solution();
 
     }
 }
