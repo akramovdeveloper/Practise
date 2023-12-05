@@ -1,6 +1,4 @@
-﻿using Practise.BankInfoFromOracle;
-using Practise.CombineTwoExcelFiles;
-using Practise.LeetCode.Easy._1431KidsWiththeGreatestNumberofCandies;
+﻿using Practise.LeetCode.Easy._605CanPlaceFlowers;
 
 namespace Practise;
 
