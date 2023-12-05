@@ -16,7 +16,7 @@ internal class Program
             Console.Write(i + ", ");
         }*/
 
-        BankInfo.BankInfoWithJoin();
+        CombineTwoExcelSolution.Solution();
 
     }
 }
