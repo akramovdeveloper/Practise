@@ -1,4 +1,5 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using ClosedXML.Excel;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Practise.BankInfoFromOracle;
 public class BankInfo
@@ -8,8 +9,8 @@ public class BankInfo
         //string oracleConnString = "Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 194.93.25.245)(PORT = 15230)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = xtmbat_pdb) ) );User Id=xtmbat_adm;Password=xtmbat_adm_pass;";
         string oracleConnString = "Data Source=(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.43.39)(PORT = 1521)) ) (CONNECT_DATA = (SERVICE_NAME = xtmbat) ) );User Id=XTMBAT_USER;Password=XTMBAT_USER_PASSWORD;";
 
-        //string outputPath = @$"C:\Users\User\Desktop\BankInfo.xlsx";
-        string outputPath = @$"C:\Users\User\Desktop\script.sql";
+        string outputPath = @$"C:\Users\User\Desktop\1.xlsx";
+        string outputPath2 = @$"C:\Users\User\Desktop\script.sql";
 
         /*DataTable dataTable = new("BankInfo");
         dataTable.Columns.AddRange(new DataColumn[]
@@ -46,21 +47,34 @@ public class BankInfo
             }
         }*/
 
+        List<string> pinflList = new List<string>();
         using (var oracleConn = new OracleConnection(oracleConnString))
         {
             oracleConn.Open();
-            using (var cmd = new OracleCommand("select * from SALARY.INFO_CALCULATION_KIND where state_id = 1 order by id", oracleConn))
+            using (var cmd = new OracleCommand("select p.pinfl from hrm.hl_employee e inner join hrm.hl_person p on e.person_id = p.id where e.organization_id = 71", oracleConn))
             {
                 var reader = cmd.ExecuteReader();
-                using (StreamWriter sw = new StreamWriter(outputPath))
+                using (StreamWriter sw = new StreamWriter(outputPath2))
                 {
                     while (reader.Read())
                     {
-                        sw.WriteLine(@$"insert into SALARY.INFO_CALCULATION_KIND_USED_TABLE (OWNER_ID, START_ON, END_ON, CALC_FROM_IN_SUM, FORMED_CALCULATION_KIND_ID, MINIMUM_VALUE_TYPE_ID, QUANTITY_OF_MINIMUM_VALUE)
-values (42, to_date('01-01-2023', 'dd-mm-yyyy'), null, 0, {reader.GetInt32(0)}, null, 0.00);");
+                        pinflList.Add(reader.GetString(0));
                     }
                 }
             }
+        }
+        using (var wb1 = new XLWorkbook(outputPath))
+        {
+            var sheet1 = wb1.Worksheet(1);
+            for (int row = 4; row <= sheet1.LastRowUsed().RowNumber(); row++)
+            {
+                var pinfl = sheet1.Cell(row, 1).Value.ToString().Trim();
+                if (pinflList.Contains(pinfl))
+                {
+                    sheet1.Row(row).Delete();
+                }
+            }
+            wb1.Save();
         }
     }
 }
