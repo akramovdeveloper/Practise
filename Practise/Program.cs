@@ -1,4 +1,6 @@
-﻿using Practise.LeetCode.Easy._605CanPlaceFlowers;
+﻿using Practise.BankInfoFromOracle;
+using Practise.CombineTwoExcelFiles;
+using Practise.LeetCode.Easy._605CanPlaceFlowers;
 
 namespace Practise;
 
@@ -14,7 +16,7 @@ internal class Program
             Console.Write(i + ", ");
         }*/
 
-        CombineTwoExcelSolution.Solution();
+        BankInfo.BankInfoWithJoin();
 
     }
 }

@@ -54,14 +54,16 @@ public class CombineTwoExcelSolution
 
                                 if (pinfl == pinfl2)
                                 {
-                                    birthDate = birthDate2;
+                                    int x = birthDate2.IndexOf(" ");
+                                    birthDate = x > 0 ? birthDate2[..x] : birthDate2;
                                     seriya = seriya2;
                                     seriyaNumber = seriyaNumber2;
                                     str = str2;
-
+                                    break;
                                 }
                             }
-
+                            int sanx = sanasi.IndexOf(" "); 
+                            int holx = holati.IndexOf(" "); 
                             int newRow = row;
                             sheetNew.Row(newRow).Cell(1).Value = pinfl;
                             sheetNew.Row(newRow).Cell(2).Value = birthDate;
@@ -75,8 +77,8 @@ public class CombineTwoExcelSolution
                             sheetNew.Row(newRow).Cell(10).Value = humo;
                             sheetNew.Row(newRow).Cell(11).Value = bankCodeHumo;
                             sheetNew.Row(newRow).Cell(12).Value = raqami;
-                            sheetNew.Row(newRow).Cell(13).Value = sanasi;
-                            sheetNew.Row(newRow).Cell(14).Value = holati;
+                            sheetNew.Row(newRow).Cell(13).Value = sanx > 0 ? sanasi[..sanx] : sanasi;
+                            sheetNew.Row(newRow).Cell(14).Value = holx > 0 ? holati[..holx] : holati;
                             sheetNew.Row(newRow).Cell(15).Value = yil;
                             sheetNew.Row(newRow).Cell(16).Value = oy;
                             sheetNew.Row(newRow).Cell(17).Value = kun;
