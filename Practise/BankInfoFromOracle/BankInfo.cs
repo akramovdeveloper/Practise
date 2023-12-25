@@ -51,7 +51,7 @@ public class BankInfo
         using (var oracleConn = new OracleConnection(oracleConnString))
         {
             oracleConn.Open();
-            using (var cmd = new OracleCommand("select p.pinfl from hrm.hl_employee e inner join hrm.hl_person p on e.person_id = p.id where e.organization_id = 71", oracleConn))
+            using (var cmd = new OracleCommand("select p.pinfl from hrm.hl_employee e inner join hrm.hl_person p on e.person_id = p.id where e.organization_id = 60", oracleConn))
             {
                 var reader = cmd.ExecuteReader();
                 using (StreamWriter sw = new StreamWriter(outputPath2))
@@ -72,6 +72,7 @@ public class BankInfo
                 if (pinflList.Contains(pinfl))
                 {
                     sheet1.Row(row).Delete();
+                    Console.WriteLine(pinfl + " o'chirildi");
                 }
             }
             wb1.Save();
