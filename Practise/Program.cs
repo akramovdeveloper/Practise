@@ -1,7 +1,4 @@
-﻿using Practise.BankInfoFromOracle;
-using Practise.CombineTwoExcelFiles;
-using Practise.LeetCode.Easy._605CanPlaceFlowers;
-using Practise.LeetCode.Medium._151ReverseWordsinaString;
+﻿using Practise.LeetCode.Medium._238ProductofArrayExceptSelf;
 
 namespace Practise;
 
@@ -9,15 +6,9 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        /*int[] enter = new int[] { 2, 3, 5, 1, 3 };
-        var res = Solution1431.KidsWithCandies(enter, 3);
-
-        foreach ( var i in res )
-        {
-            Console.Write(i + ", ");
-        }*/
-
-        BankInfo.BankInfoWithJoin();
+        var array = Solution238.ProductExceptSelf(-1,1,0,-3,3);
+        foreach (var item in array)
+            Console.Write(item + " ");
 
     }
 }
