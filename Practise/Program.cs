@@ -1,4 +1,5 @@
 ﻿using Practise.LeetCode.Medium._238ProductofArrayExceptSelf;
+using Practise.LeetCode.Medium._334IncreasingTripletSubsequence;
 
 namespace Practise;
 
@@ -6,9 +7,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        var array = Solution238.ProductExceptSelf(-1,1,0,-3,3);
-        foreach (var item in array)
-            Console.Write(item + " ");
+            Console.WriteLine(Solution334.IncreasingTriplet(2, 1, 5, 0, 4, 6));
 
     }
 }
