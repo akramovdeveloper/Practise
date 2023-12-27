@@ -1,5 +1,5 @@
-﻿using Practise.LeetCode.Medium._238ProductofArrayExceptSelf;
-using Practise.LeetCode.Medium._334IncreasingTripletSubsequence;
+﻿using Practise.LeetCode.Medium._334IncreasingTripletSubsequence;
+using Practise.LeetCode.Medium._443StringCompression;
 
 namespace Practise;
 
@@ -7,7 +7,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-            Console.WriteLine(Solution334.IncreasingTriplet(2, 1, 5, 0, 4, 6));
-
+        char[] x = new char[] { 'a','a','a', 'b', 'b', 'a', 'a' };
+        Console.WriteLine(Solution443_2.Compress(x));
     }
 }
