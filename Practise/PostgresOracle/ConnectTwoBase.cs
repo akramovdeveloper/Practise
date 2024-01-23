@@ -8,74 +8,68 @@ public class ConnectTwoBase
 {
     public static void ConnectTwoBaseMethod()
     {
-        //string postgresConnString = "Host=83.69.136.217;Port=6529;Username=postgres;Password=WEB@$Ef0rever;Database=sspuis3;Pooling=false;";
+        string postgresConnString = "Host=83.69.136.217;Port=6529;Username=postgres;Password=WEB@$Ef0rever;Database=sspuis3;Pooling=false;";
         string oracleConnString = "Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 194.93.25.245)(PORT = 15230)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = xtmbat_pdb) ) );User Id=xtmbat_adm;Password=xtmbat_adm_pass;";
 
-        //List<PgNationality> pgNationalityList = new List<PgNationality>();
-        List<OrcNationality> orcNationalities = new List<OrcNationality>();
+        List<PgDistrict> pgDistricts = new List<PgDistrict>();
+        List<OrcDistrict> orcDistricts = new List<OrcDistrict>();
 
-        /*using (var postgresConn = new NpgsqlConnection(postgresConnString))
+        using (var postgresConn = new NpgsqlConnection(postgresConnString))
         {
             postgresConn.Open();
-            using (var cmd = new NpgsqlCommand("select * from public.info_nationality", postgresConn))
+            using (var cmd = new NpgsqlCommand("select * from public.info_region", postgresConn))
             using (var reader = cmd.ExecuteReader())
                 while (reader.Read())
                 {
-                    pgNationalityList.Add(new PgNationality()
+                    pgDistricts.Add(new PgDistrict()
                     {
                         Id = reader.GetInt32(0),
-                        WbCode = reader.GetString(1),
-                        ShortName = reader.GetString(2),
-                        FullName = reader.GetString(3),
-                        StateId = reader.GetInt32(4),
+                        Code = reader.GetString(2)
                     });
                 }
-        }*/
-        string outputFilePath = @"C:\Users\User\Desktop\alter table adm.info_nationality.sql";
+        }
+        string outputFilePath = @"C:\Users\User\Desktop\alter table adm.info_district.sql";
         using (var oracleConn = new OracleConnection(oracleConnString))
         {
             oracleConn.Open();
-            using (var cmd = new OracleCommand("select * from adm.info_nationality", oracleConn))
+            using (var cmd = new OracleCommand("select * from adm.info_region", oracleConn))
             using (var reader = cmd.ExecuteReader())
                 while (reader.Read())
                 {
-                    orcNationalities.Add(new OrcNationality()
+                    orcDistricts.Add(new OrcDistrict()
                     {
                         Id = reader.GetInt32(0),
-                        Code = reader.GetString(1),
-                        ShortName = reader.GetString(2),
-                        FullName = reader.GetString(3),
-                        StateId = reader.GetInt32(4),
-                        WbCode = reader.IsDBNull(9) ? "0" : reader.GetString(9)
+                        Code = reader.IsDBNull(13) ? null : reader.GetString(13),
                     });
-                    /*Console.WriteLine($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}, {reader.GetString(3)}, {reader.GetInt32(4)}");*/
+                    
                 }
-
-            using (StreamWriter sw = new StreamWriter(outputFilePath))
+            pgDistricts = pgDistricts.OrderBy(x => x.Id).ToList();
+            orcDistricts = orcDistricts.OrderBy(x => x.Id).ToList();
+            foreach (var pgDistrict in pgDistricts)
             {
-                foreach (var item in orcNationalities)
+                var matchingOrcDistrict = orcDistricts.FirstOrDefault(orc => orc.Id == pgDistrict.Id);
+                if (matchingOrcDistrict != null)
                 {
-                    sw.WriteLine(@$"UPDATE ADM.INFO_NATIONALITY SET WBCODE = N'{item.WbCode}' WHERE ID = {item.Id};");
+                    matchingOrcDistrict.Code = pgDistrict.Code;
                 }
             }
-
-            /*foreach (var pgNationality in pgNationalityList)
-            {
-                var matchingOrcNationality = orcNationalities.FirstOrDefault(orc => orc.FullName == pgNationality.FullName);
-                if (matchingOrcNationality != null)
-                {
-                    matchingOrcNationality.WbCode = pgNationality.WbCode;
-                }
-            }
-            foreach (var orcNationality in orcNationalities)
+            /*foreach (var orcDistrict in orcDistricts)
             {
                 using (var cmd = new OracleCommand($"UPDATE adm.info_nationality SET WbCode = :WbCode WHERE Id = :Id", oracleConn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("WbCode", orcNationality.WbCode));
-                    cmd.Parameters.Add(new OracleParameter("Id", orcNationality.Id));
+                    cmd.Parameters.Add(new OracleParameter("WbCode", orcDistrict.Soato));
+                    cmd.Parameters.Add(new OracleParameter("Id", orcDistrict.Id));
                     cmd.ExecuteNonQuery();
                 }
             }*/
+
+            using (StreamWriter sw = new StreamWriter(outputFilePath))
+            {
+                foreach (var item in orcDistricts)
+                {
+                    sw.WriteLine(@$"UPDATE ADM.INFO_REGION SET CODE = N'{item.Code}' WHERE ID = {item.Id};");
+                }
+            }
         }
     }
 }
