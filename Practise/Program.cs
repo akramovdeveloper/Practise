@@ -10,7 +10,7 @@ namespace Practise;
 internal class Program
 {
     public static string botToken = "6258639001:AAFDjpTwuIQZxEBHf1XgJvaD7yDKemkPll0";
-    public long sourceGroupId = -1001238611612;
+    //public long sourceGroupId = -1001238611612;
     public static long destinationGroupId = -1001898663340;
     public static TelegramBotClient botClient = new TelegramBotClient(botToken);
 
