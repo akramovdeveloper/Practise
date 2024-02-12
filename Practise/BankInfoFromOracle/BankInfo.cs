@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using Oracle.ManagedDataAccess.Client;
+using System.Data;
 
 namespace Practise.BankInfoFromOracle;
 public class BankInfo
@@ -12,28 +13,31 @@ public class BankInfo
         string outputPath = @$"C:\Users\User\Desktop\1.xlsx";
         string outputPath2 = @$"C:\Users\User\Desktop\script.sql";
 
-        /*DataTable dataTable = new("BankInfo");
+        DataTable dataTable = new("BankInfo");
         dataTable.Columns.AddRange(new DataColumn[]
         {
-            new DataColumn("Name"),
-            new DataColumn("Code"),
-            new DataColumn("BankName")
-        });*/
+            new DataColumn("Id"),
+            new DataColumn("PINFL"),
+            new DataColumn("Full Name"),
+            new DataColumn("Passport"),
+            new DataColumn("Gender"),
+            new DataColumn("Birth Date"),
+        });
 
-        /*using (var oracleConn = new OracleConnection(oracleConnString))
+        using (var oracleConn = new OracleConnection(oracleConnString))
         {
             oracleConn.Open();
-            using (var cmd = new OracleCommand("SELECT b.Full_Name, b.Code, c.Full_Name FROM adm.info_bank b INNER JOIN adm.enum_bank_code c ON b.Bank_Code_Id = c.ID", oracleConn))
+            using (var cmd = new OracleCommand("SELECT p.id, p.pinfl, p.Full_Name, p.doc_seria, p.doc_number, g.full_name, p.BIRTH_ON FROM hrm.hl_person p join CMN.ENUM_GENDER g on g.id = p.GENDER_ID", oracleConn))
             {
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    dataTable.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+                    dataTable.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), $"{reader.GetString(3)} {reader.GetString(4)}", reader.GetString(5), reader.GetString(6));
                 }
             }
-        }*/
+        }
 
-        /*using (XLWorkbook wb = new XLWorkbook())
+        using (XLWorkbook wb = new XLWorkbook())
         {
             var ws = wb.Worksheets.Add(dataTable);
 
@@ -45,9 +49,9 @@ public class BankInfo
                 wb.SaveAs(stream);
                 File.WriteAllBytes(outputPath, stream.ToArray());
             }
-        }*/
+        }
 
-        List<string> pinflList = new List<string>();
+        /*List<string> pinflList = new List<string>();
         using (var oracleConn = new OracleConnection(oracleConnString))
         {
             oracleConn.Open();
@@ -76,6 +80,6 @@ public class BankInfo
                 }
             }
             wb1.Save();
-        }
+        }*/
     }
 }

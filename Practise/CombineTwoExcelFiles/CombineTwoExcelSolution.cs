@@ -7,9 +7,10 @@ public class CombineTwoExcelSolution
 {
     public static void Solution()
     {
-        string firstExcelFile = @"C:\Users\User\Desktop\1.xlsx";
-        string secondExcelFile = @"C:\Users\User\Desktop\54554544.xlsx";
-        string newExcelFile = @"C:\Users\User\Desktop\3.xlsx";
+        string firstExcelFile = @"C:\Users\User\Desktop\3.xlsx";
+        string secondExcelFile = @"C:\Users\User\Desktop\4.xlsx";
+        //string secondExcelFile = @"C:\Users\User\Desktop\54554544.xlsx";
+        //string newExcelFile = @"C:\Users\User\Desktop\3.xlsx";
 
         using (var wb1 = new XLWorkbook(firstExcelFile))
         {
@@ -22,10 +23,10 @@ public class CombineTwoExcelSolution
                     var sheetNew = wbNew.Worksheets.Add("MergedData");
                     try
                     {
-                        int count = 1;
-                        for (int row = 4; row <= sheet1.LastRowUsed().RowNumber(); row++)
+                        //int count = 1;
+                        for (int row = 2; row <= sheet1.LastRowUsed().RowNumber(); row++)
                         {
-                            var pinfl = sheet1.Cell(row, 1).Value.ToString().Trim();
+                            /*var pinfl = sheet1.Cell(row, 1).Value.ToString().Trim();
                             var birthDate = sheet1.Cell(row, 2).Value.ToString().Trim();
                             var seriya = sheet1.Cell(row, 3).Value.ToString().Trim();
                             var seriyaNumber = sheet1.Cell(row, 4).Value.ToString().Trim();
@@ -42,11 +43,13 @@ public class CombineTwoExcelSolution
                             var yil = sheet1.Cell(row, 15).Value.ToString().Trim();
                             var oy = sheet1.Cell(row, 16).Value.ToString().Trim();
                             var kun = sheet1.Cell(row, 17).Value.ToString().Trim();
-                            var bandlikTuri = sheet1.Cell(row, 18).Value.ToString().Trim();
+                            var bandlikTuri = sheet1.Cell(row, 18).Value.ToString().Trim();*/
 
+                            var str1 = sheet1.Cell(row, 1).Value.ToString().Trim();
+                            var flag = false;
                             for (int row2 = 2; row2 <= sheet2.LastRowUsed().RowNumber(); row2++)
                             {
-                                var pinfl2 = sheet2.Cell(row2, 1).Value.ToString();
+                                /*var pinfl2 = sheet2.Cell(row2, 1).Value.ToString();
                                 var birthDate2 = sheet2.Cell(row2, 2).Value.ToString();
                                 var seriya2 = sheet2.Cell(row2, 3).Value.ToString();
                                 var seriyaNumber2 = sheet2.Cell(row2, 4).Value.ToString();
@@ -60,9 +63,16 @@ public class CombineTwoExcelSolution
                                     seriyaNumber = seriyaNumber2;
                                     str = str2;
                                     break;
-                                }
+                                }*/
+
+                                var str2 = sheet2.Cell(row2, 1).Value.ToString().Trim();
+                                if (str1 == str2)
+                                    flag = true;
                             }
-                            int sanx = sanasi.IndexOf(" "); 
+                            if (!flag)
+                                Console.WriteLine(str1);
+
+                            /*int sanx = sanasi.IndexOf(" "); 
                             int holx = holati.IndexOf(" "); 
                             int newRow = row;
                             sheetNew.Row(newRow).Cell(1).Value = pinfl;
@@ -83,11 +93,11 @@ public class CombineTwoExcelSolution
                             sheetNew.Row(newRow).Cell(16).Value = oy;
                             sheetNew.Row(newRow).Cell(17).Value = kun;
                             sheetNew.Row(newRow).Cell(18).Value = bandlikTuri;
-                            Console.WriteLine($"{count++}. {pinfl}: qo'shildi");
+                            Console.WriteLine($"{count++}. {pinfl}: qo'shildi");*/
                         }
 
                         // Save the new workbook to the specified file
-                        wbNew.SaveAs(newExcelFile);
+                        //wbNew.SaveAs(newExcelFile);
                     }
                     catch (Exception ex)
                     {
