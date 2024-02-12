@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Practise.CombineTwoExcelFiles;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
@@ -16,12 +17,14 @@ internal class Program
 
     static void Main(string[] args)
     {
-        var updateHandler = new DefaultUpdateHandler(HandleUpdateAsync, HandleErrorAsync);
+        CombineTwoExcelSolution.Solution();
 
-        botClient.StartReceiving(updateHandler);
+        //var updateHandler = new DefaultUpdateHandler(HandleUpdateAsync, HandleErrorAsync);
 
-        Console.WriteLine("Dasturni to'xtatish uchun 'Enter' tugmasini bosing.");
-        Console.ReadLine();
+        //botClient.StartReceiving(updateHandler);
+
+        //Console.WriteLine("Dasturni to'xtatish uchun 'Enter' tugmasini bosing.");
+        //Console.ReadLine();
 
         //botClient.StopReceiving();
     }
